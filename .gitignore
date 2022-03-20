@@ -1,0 +1,4 @@
+.idea
+configfile.ini
+data.db
+__pycache__/
