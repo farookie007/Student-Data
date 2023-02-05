@@ -27,7 +27,6 @@ def _get_result_files() -> List:
     return files
 
 
-# noinspection PyUnresolvedReferences
 def upload(matric_no: str):
     """This function uploads only the data of the current user into database
     by filtering using the `matric_no`."""
@@ -76,7 +75,7 @@ def refresh():
 
 
 def __burn_database():  # I only use this when I want to clear out the database
-    """This function deletes all the data in the database :class: MetaData and leaves an empty table
+    """This function deletes all the data in the database and leaves an empty table
     in the database."""
     meta.drop_all()
     meta.create_all()

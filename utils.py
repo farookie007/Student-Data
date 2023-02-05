@@ -29,7 +29,6 @@ def check_password_hash(password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(password.encode(), hashed_password.encode('utf-8'))
 
 
-# noinspection SpellCheckingInspection
 def send_email_code(message: EmailMessage):
     """This function connects to the SMTP server, and sends the email `message`
     to the user - `recv`."""
