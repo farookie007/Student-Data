@@ -1,5 +1,5 @@
 from sqlalchemy import or_
-
+# custom imports
 from utils import generate_token, generate_password_hash, send_email_code, validate_token,\
     check_password_hash, create_recovery_email, validate_email, SECRET_KEY
 from school import Student

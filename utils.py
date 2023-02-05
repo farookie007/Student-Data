@@ -8,6 +8,7 @@ from email.message import EmailMessage
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from typing import Dict
 
+
 config = configparser.ConfigParser()
 config.read('configfile.ini')
 
