@@ -75,11 +75,13 @@ class Semester:
 
 
 class Session(Semester):
-    # noinspection PyMissingConstructor
     def __init__(self, level: str, semesters: List[Semester]):
         self.level = level
         self.first_semester = semesters[0]
-        self.second_semester = semesters[1]
+        try:
+            self.second_semester = semesters[1]
+        except IndexError:
+            self.second_semester = None
         try:
             self.third_semester = semesters[2]
         except IndexError:  # in cases of sessions that only have 2 semesters
@@ -106,9 +108,9 @@ class Session(Semester):
         data into a single DataFrame and returns the DataFrame.
         :return: pandas.DataFrame
         """
-        if self.third_semester:
-            return pd.concat([self.first_semester.df, self.second_semester.df, self.third_semester.df])
-        return pd.concat([self.first_semester.df, self.second_semester.df])
+        list_of_sems = [self.first_semester, self.second_semester, self.third_semester]
+        list_of_sems = list(filter(lambda x: x is not None, list_of_sems))
+        return pd.concat([sems.df for sems in list_of_sems])
 
     def show(self) -> pd.DataFrame:
         """
