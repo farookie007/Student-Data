@@ -71,7 +71,7 @@ class Semester:
         try:
             return sum(self.gradients()) / sum(self.units())
         except ZeroDivisionError:
-            return 0.0
+            return float(0)
 
 
 class Session(Semester):

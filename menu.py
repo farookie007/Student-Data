@@ -1,5 +1,5 @@
 from sqlalchemy import or_
-# custom imports
+# local imports
 from utils import generate_token, generate_password_hash, send_email_code, validate_token,\
     check_password_hash, create_recovery_email, validate_email, SECRET_KEY
 from school import Student
@@ -91,9 +91,13 @@ def menu():
                 payload = generate_token(email)
                 code = list(payload.keys())[0]
                 msg = create_recovery_email(code, email, reset=False)
-                send_email_code(msg)
+                try:
+                    send_email_code(msg)
+                except:
+                    print("[SERVER ERROR]: No Internet Connection")
+                    continue
                 name, domain = email.split('@')
-                code = input(f'Enter the code sent to {name.replace(name[-6:], "******")}@{domain}: ')
+                code = input(f'Enter the code sent to {name.replace(name[4:], "*********")}@{domain}: ')
                 while True:
                     try:
                         token = payload[code]
@@ -120,7 +124,7 @@ def menu():
             key = input('Admin Key: ')
             if key == SECRET_KEY:
                 refresh()
-                print('***Updated...***')
+                print('***Updating... Please Wait***')
             else:
                 print('[Error]: Incorrect admin key')
 
@@ -145,7 +149,7 @@ def student_menu(matric_no: str):
     user_choice = 'f'
     while user_choice != 'q':
         if user_choice == 'u':
-            print('**Uploading...**')
+            print('**Uploading... Please Wait**')
             upload(student.matric_no)
             student.update()
             user_choice = 'f'
@@ -215,8 +219,8 @@ def reset_password(matric_no: str):
 
 
 def signup(matric_no: str, email: str, password: str):
-    """This function helps new users to register their account, and stores their date in the database."""
-    hashed_password = generate_password_hash(password)  # generates a hashed sequence of characters from the `password`.
+    """This function helps a new user to register their account, and stores their data in the database."""
+    hashed_password = generate_password_hash(password)  # generates a hashed sequence of characters from `password`.
     # the  `hashed password` is stored in the database and not the `password` for security purposes in case of attack
     with engine.begin() as conn:
         ins = students.insert().values(id=matric_no.upper(), email=email, password=hashed_password)
