@@ -1,5 +1,4 @@
 .idea
 configfile.ini
 data.db
-__pycache__/"results/" 
-'__pycache__/\nresults/' 
+__pycache__/ 

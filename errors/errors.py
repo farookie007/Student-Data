@@ -1,2 +1,0 @@
-class MatchError(AssertionError):
-    pass
