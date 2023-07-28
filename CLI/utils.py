@@ -142,22 +142,3 @@ def parse_html(file, sessional=True) -> Tuple:
     if sessional:
         return dfs[1:], session_id, name, matric, fac, dept, level
     return dfs[-1], session_id, name, matric, fac, dept, level
-
-def parse(file, sessional=True) -> Tuple:
-    """
-    This function parses the HTML file containing the results of a Student (esp. University of Ilorin)
-    into a pandas DataFrame and creates a Semester object for each individual semester contained in the result.
-    Ensure the HTML files are stored in a folder named 'results' and the filenames are named in ascending order 
-    according to their corresponding years to enable the function locate it.
-    :return: List[pandas.DataFrame]
-    """
-    grade = {
-        'A': 5,
-        'B': 4,
-        'C': 3,
-        'D': 2,
-        'E': 1,
-        'F': 0
-        }
-    matric, name, fac, dept, level = pd.read_html(file)[0][1]
-    dfs = pd.read_html(file, header=1, index_col=1)
