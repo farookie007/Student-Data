@@ -10,7 +10,6 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=100, blank=True)
     middle_name = models.CharField(max_length=100, blank=True)
     school = models.CharField(max_length=150, blank=True)
-    # cgpa = models.CharField(max_length=5, blank=True)
     cgpa = models.FloatField(max_length=5, default=0.00)
     std_mail = models.CharField(max_length=150, blank=True)
     faculty = models.CharField(max_length=150, blank=True)
