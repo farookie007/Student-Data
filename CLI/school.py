@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import List, Dict, Tuple, Union
-# custom imports
+
 from database import engine, results
 from errors.errors import MatchError
 
@@ -121,7 +121,6 @@ class Session(Semester):
 
 
 class Student(Semester):
-    # noinspection PyMissingConstructor
     def __init__(self, matric_no: Union[str, int]):
         self.matric_no = matric_no.upper()
         self.__sessions = dict()
