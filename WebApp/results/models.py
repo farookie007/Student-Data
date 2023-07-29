@@ -9,7 +9,7 @@ class Result(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     level = models.CharField(max_length=5, blank=True)
     session = models.CharField(max_length=20, blank=True)
-    payload = models.TextField()
+    payload = models.JSONField()
     gpa = models.FloatField(max_length=5, default=0.00)     # stores the gpa of the result
     cgpa = models.FloatField(max_length=5, default=0.00)    # stores the cgpa all previous results
 
