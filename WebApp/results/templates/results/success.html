@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Success</title>
 </head>
+
 <body>
     <h1>File Uploaded Successfully</h1>
+    {% for r in user_results %}
+    <p>{{ r.result_id }}</p>
+    <ul>
+        <li>GPA: {{ r.gpa }}</li>
+        <li>CGPA: {{ r.cgpa }}</li>
+    </ul>
+    {% endfor %}
 </body>
+
 </html>
