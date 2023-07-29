@@ -16,7 +16,6 @@ def upload_result_view(request):
         if form.is_valid():
             uploaded_results = form.cleaned_data["file"]
             user = request.user
-            user_results = Result.objects.filter(owner=user)
 
             for file in uploaded_results:
                 dfs, session, level, fac = parse_result_html(file.file)
@@ -27,9 +26,7 @@ def upload_result_view(request):
                     semester = get_semester(cleaned_df)
                     result_id = f'{user.matric}:{session}/{semester}'       # unique id to differentiate each result
                     # checking to see if the result already exists in the database using the `result_id`
-                    result = user_results.filter(result_id=result_id)
-                    prev_payloads = [clean(pd.read_json(result.payload), fac, result.level) for result in user_results if result.result_id < result_id]
-                    prev_payloads.append(cleaned_df)
+                    result = Result.objects.filter(result_id=result_id)
 
                     # create a new `Result` object if it doesn't exist already
                     if len(result) == 0:
@@ -45,9 +42,16 @@ def upload_result_view(request):
                         result = result[0]
                     result.payload = df.to_json()
                     result.gpa = calculate_gpa(cleaned_df)
-                    result.cgpa = calculate_cgpa(prev_payloads)
                     result.save()
-            return render(request, 'results/success.html')
+
+            # Calculating CGPA at the end of each semester
+            user_results = Result.objects.filter(owner=user).order_by('result_id')
+            for i, result in enumerate(user_results, start=1):
+                prev_dfs = [clean(pd.read_json(r.payload), fac, r.level) for r in user_results[:i]]
+                result.cgpa = calculate_cgpa(prev_dfs)
+                result.save()
+
+            return render(request, 'results/success.html', {'user_results': Result.objects.filter(owner=user)})
     # otherwise;
     else:
         form = ResultUploadForm()
