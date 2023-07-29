@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # local Apps
     'accounts.apps.AccountsConfig',
     'results.apps.ResultsConfig',
+    'user_auth.apps.UserAuthConfig',
     # 3rd party Apps
     'django_extensions',    # provides a debugging console on the error page
 ]
