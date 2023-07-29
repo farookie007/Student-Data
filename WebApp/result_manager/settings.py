@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'results.apps.ResultsConfig',
     # 3rd party Apps
-    'django_extensions',
+    'django_extensions',    # provides a debugging console on the error page
 ]
 
 MIDDLEWARE = [
