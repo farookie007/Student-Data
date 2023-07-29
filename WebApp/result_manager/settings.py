@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # local Apps
     'accounts.apps.AccountsConfig',
     'results.apps.ResultsConfig',
+    # 3rd party Apps
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
