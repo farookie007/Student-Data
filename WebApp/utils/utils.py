@@ -74,7 +74,7 @@ def calculate_cgpa(dfs):
 
 def clean(df, fac, level):
     df = df.dropna()
-    if fac == 'Engineering and Technology' and level == '100':
+    if level == '100' and fac == 'Engineering and Technology':
         # This handles the complications with Engineering and Technology 100L results where only GNS matters.
         df = df.drop(labels=[title for title in df.index if not title.startswith('GNS')], axis=0)
     return df
