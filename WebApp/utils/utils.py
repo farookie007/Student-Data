@@ -40,9 +40,8 @@ def parse_result_html(file) -> Tuple:
     
     # extracting the session id
     # decoding the `file` object which is an io.BytesIO object
-    # content = file.getvalue().decode()
-    # session = re.search('\d\d\d\d/\d\d\d\d', content).group()
-    session = '2017/2018'
+    content = file.getvalue().decode()
+    session = re.search('\d\d\d\d/\d\d\d\d', content).group()
 
     dfs = pd.read_html(file, header=1, index_col=1)
     for df in dfs[1:]:
