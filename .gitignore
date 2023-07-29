@@ -1,4 +1,6 @@
 .idea
 configfile.ini
 data.db
-__pycache__/ 
+__pycache__/
+WebApp/db.sqlite3
+CLI/results_files/*
