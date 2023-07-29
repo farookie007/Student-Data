@@ -23,7 +23,7 @@ results = db.Table('results', meta,
 def _get_result_files() -> List:
     """This private function gets the HTML files from the `results` folder
     in the root directory and returns a list of the filenames."""
-    files = glob.glob('.\\results\\*.html')
+    files = glob.glob('.\\results_files\\*.html')
     return files
 
 
