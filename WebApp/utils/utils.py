@@ -46,17 +46,13 @@ def parse_result_html(file) -> Tuple:
     dfs = pd.read_html(file, header=1, index_col=1)
     for df in dfs[1:]:
         df.drop(columns=['Unnamed: 9', 'S/No.'], index='Total', inplace=True)
-        df.dropna(inplace=True)
-        if fac == 'Engineering and Technology' and level == '100':
-            # This handles the complications with Engineering and Technology 100L results where only GNS matters.
-            df.drop(labels=[title for title in df.index if not title.startswith('GNS')], axis=0, inplace=True)
         df['Gradient'] = pd.Series(
-            [df.loc[f]['Unit'] * grade[df.loc[f]['Grade']] for f in df.index],
+            [df.loc[f]['Unit'] * grade.get(df.loc[f]['Grade'], 0) for f in df.index],
             index=df.index,
             dtype='int8'
             )
 
-    return dfs[1:], session, level
+    return dfs[1:], session, level, fac
 
 
 def calculate_gpa(df: pd.DataFrame) -> float:
@@ -71,3 +67,18 @@ def calculate_gpa(df: pd.DataFrame) -> float:
         return sum(gradients) / sum(units)
     except ZeroDivisionError:
         return float(0)
+
+def calculate_cgpa(dfs):
+    return calculate_gpa(merge(dfs))
+
+
+def clean(df, fac, level):
+    df = df.dropna()
+    if fac == 'Engineering and Technology' and level == '100':
+        # This handles the complications with Engineering and Technology 100L results where only GNS matters.
+        df = df.drop(labels=[title for title in df.index if not title.startswith('GNS')], axis=0)
+    return df
+
+
+def merge(dfs):
+    return pd.concat(dfs)
