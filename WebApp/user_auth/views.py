@@ -8,10 +8,9 @@ from .forms import LoginForm
 
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        # form = LoginForm(request.POST)
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             matric = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -24,9 +23,7 @@ def login(request):
                 messages.success(request, f'Login successful')
                 return redirect(reverse('accounts:dashboard'))
         messages.error(request, 'Invalid matric number or password')
-        # form = LoginForm(request.POST)
-        form = AuthenticationForm(request.POST)
+        form = LoginForm(request.POST)
     else:
-        # form = LoginForm()
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'user_auth/login.html', {'form': form})
