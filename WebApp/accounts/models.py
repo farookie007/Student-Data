@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    matric = models.CharField(max_length=15, blank=True, unique=True)
-    email = models.EmailField(blank=True, unique=True)
-    username = models.CharField(max_length=100, unique=True)
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
+    matric = models.CharField(max_length=15, blank=True, unique=True, null=False)
+    email = models.EmailField(blank=True, unique=True, null=False)
+    username = models.CharField(max_length=100, unique=True, null=False)
+    first_name = models.CharField(max_length=100, blank=True, null=False)
+    last_name = models.CharField(max_length=100, blank=True, null=False)
     middle_name = models.CharField(max_length=100, blank=True)
     school = models.CharField(max_length=150, blank=True)
     cgpa = models.FloatField(max_length=5, default=0.00)
