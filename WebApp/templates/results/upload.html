@@ -7,14 +7,14 @@
 {% block content %}
 
 <h2>Upload Results</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
         <label for="files">Add Files:</label>
         <!-- <input type="password" name="password" id="password" required> -->
         {% render_field form.file name="file" id="file" type="file" %}
         {% for error in form.file.errors %}
-            <p class="error-msg">{{ error }}</p>
+        <p class="error-msg">{{ error }}</p>
         {% endfor %}
     </div>
 
