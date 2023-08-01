@@ -25,9 +25,9 @@ def upload_result_view(request):
 
                 # looping over each semester result in the file
                 for df in dfs:
+                    semester = get_semester(df)
                     result_id = f'{user.matric}:{session}/{semester}/{level}{"E" if fac == "Engineering and Technology" else ""}'       # unique id to differentiate each result
                     cleaned_df = clean(df, result_id)
-                    semester = get_semester(cleaned_df)
                     # checking to see if the result already exists in the database using the `result_id`
                     result = Result.objects.filter(result_id=result_id)
 
@@ -49,11 +49,13 @@ def upload_result_view(request):
             
             messages.success(request, 'Uploaded successfully')
             # Calculating CGPA at the end of each semester
-            # user_results = Result.objects.filter(owner=user).order_by('result_id')
-            # for i, result in enumerate(user_results, start=1):
-                # # prev_dfs = [clean(pd.read_json(r.payload), r.result_id) for r in user_results[:i]]
-                # result.cgpa = calculate_cgpa(prev_dfs)
-                # result.save()
+            user_results = Result.objects.filter(owner=user).order_by('result_id')
+            for i, result in enumerate(user_results, start=1):
+                prev_dfs = [clean(pd.read_json(r.payload), r.result_id) for r in user_results[:i]]
+                result.cgpa = calculate_cgpa(prev_dfs)
+                result.save()
+            user.cgpa = result.cgpa
+            user.save()
             return redirect(reverse('accounts:dashboard'))
         form = ResultUploadForm(request.POST, request.FILES)
     # otherwise;
