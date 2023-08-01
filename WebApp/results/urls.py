@@ -5,6 +5,8 @@ from .views import upload_result_view
 
 
 
+app_name = 'results'
+
 urlpatterns = [
-    path('upload/', upload_result_view, name='results_upload'),
+    path('upload/', upload_result_view, name='upload'),
 ]
