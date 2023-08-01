@@ -72,9 +72,9 @@ def calculate_cgpa(dfs):
     return calculate_gpa(merge(dfs))
 
 
-def clean(df, fac, level):
+def clean(df, result_id):
     df = df.dropna()
-    if level == '100' and fac == 'Engineering and Technology':
+    if result_id.endswith("100E"):
         # This handles the complications with Engineering and Technology 100L results where only GNS matters.
         df = df.drop(labels=[title for title in df.index if not title.startswith('GNS')], axis=0)
     return df
