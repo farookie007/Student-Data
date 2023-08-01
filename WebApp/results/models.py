@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 class Result(models.Model):
     semester = models.CharField(max_length=20, blank=True)
     result_id = models.CharField(max_length=30, blank=True, unique=True)
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='results')
     level = models.CharField(max_length=5, blank=True)
     session = models.CharField(max_length=20, blank=True)
     payload = models.JSONField()
