@@ -17,6 +17,7 @@ def upload_result_view(request):
 
         if form.is_valid():
             uploaded_results = form.cleaned_data["file"]
+            print(uploaded_results)
             user = request.user
 
             for file in uploaded_results:
@@ -45,17 +46,16 @@ def upload_result_view(request):
                     result.payload = df.to_json()
                     result.gpa = calculate_gpa(cleaned_df)
                     result.save()
+            
             messages.success(request, 'Uploaded successfully')
             # Calculating CGPA at the end of each semester
-            user_results = Result.objects.filter(owner=user).order_by('result_id')
-            for i, result in enumerate(user_results, start=1):
-                prev_dfs = [clean(pd.read_json(r.payload), r.result_id) for r in user_results[:i]]
-                result.cgpa = calculate_cgpa(prev_dfs)
-                result.save()
-            user.cgpa = result.cgpa
-            user.save()
+            # user_results = Result.objects.filter(owner=user).order_by('result_id')
+            # for i, result in enumerate(user_results, start=1):
+                # # prev_dfs = [clean(pd.read_json(r.payload), r.result_id) for r in user_results[:i]]
+                # result.cgpa = calculate_cgpa(prev_dfs)
+                # result.save()
             return redirect(reverse('accounts:dashboard'))
-
+        form = ResultUploadForm(request.POST, request.FILES)
     # otherwise;
     else:
         form = ResultUploadForm()
