@@ -40,6 +40,7 @@ input {
   box-sizing: border-box;
 }
 .details {
+  margin-top: 30px;
   color: #3498db;
   display: flex;
   justify-content: space-between;
@@ -59,7 +60,7 @@ input {
   margin: 5px 0;
 }
 
-button {
+button, .logout, .upload {
   width: 100%;
   padding: 12px 0;
   background-color: #3498db;
@@ -103,9 +104,34 @@ button:hover {
   font-style: italic;
   margin-top: 0;
 }
+.logout {
+  position: fixed;
+  width: fit-content;
+  top: 25px;
+  right: 25px;
+}
+.logout a {
+  padding: 8px 18px;
+  color: whitesmoke;
+  text-decoration: none;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+.upload {
+  padding: 3px 10px;
+  width: fit-content;
+  color: white;
+  text-decoration: none;
+}
 
 @media screen and (max-width: 480px) {
   .container {
     width: 90%;
+  }
+  .logout {
+    bottom: 25px;
+    right: 5px;
   }
 }

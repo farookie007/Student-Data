@@ -17,9 +17,14 @@
         <p class="alert alert-{{ message.tags }}" id="flash-msg">{{ message }}</p>
         {% endfor %}
         {% endif %}
-        
+
         {% block content %}{% endblock content %}
     </div>
+    {% if user.is_authenticated %}
+    <div class="logout">
+        <a href="{% url 'user_auth:logout' %}">Logout</a>
+    </div>
+    {% endif %}
 </body>
 
 </html>

@@ -6,51 +6,44 @@
 
 
 {% block content %}
-  
+
 <h2>Registration Form</h2>
 <form method="post">
   {% csrf_token %}
   <div class="form-group">
-    <label for="username">Username:</label>
+    <label for="username">Matric Number:</label>
     <!-- <input type="text" name="username" id="username" required> -->
     {% render_field form.username name="username" id="username" type="text" %}
     {% for error in form.username.errors %}
-      <p class="error-msg">{{ error }}</p>
-    {% endfor %}
-  </div>
-  <div class="form-group">
-    <label for="matric">Matric Number:</label>
-    {% render_field form.matric name="matric" id="matric" type="text" %}
-    {% for error in form.matric.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
     <label for="email">Email:</label>
     {% render_field form.email name="email" id="email" type="email" %}
     {% for error in form.email.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
     <label for="first_name">First Name:</label>
     {% render_field form.first_name name="first_name" id="first_name" type="text" %}
     {% for error in form.first_name.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
     <label for="last_name">Last Name:</label>
     {% render_field form.last_name name="last_name" id="last_name" type="text" %}
     {% for error in form.last_name.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
     <label for="middle_name">Middle Name:</label>
     {% render_field form.middle_name name="middle_name" id="middle_name" placeholder="(Optional)" type="text" %}
     {% for error in form.middle_name.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
@@ -58,7 +51,7 @@
     <!-- <input type="password" name="password" id="password" required> -->
     {% render_field form.password1 name="password" id="password" type="password" %}
     {% for error in form.password1.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <div class="form-group">
@@ -66,7 +59,7 @@
     <!-- <input type="password" name="confirm-password" id="confirm-password" required> -->
     {% render_field form.password2 name="confirm-password" id="confirm-password" type="password" %}
     {% for error in form.password2.errors %}
-      <p class="error-msg">{{ error }}</p>
+    <p class="error-msg">{{ error }}</p>
     {% endfor %}
   </div>
   <button type="submit">Register</button>
