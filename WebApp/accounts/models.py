@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    matric = models.CharField(max_length=15, blank=True, unique=True, null=False)
     email = models.EmailField(blank=True, unique=True, null=False)
     username = models.CharField(max_length=100, unique=True, null=False)
     first_name = models.CharField(max_length=100, blank=True, null=False)
@@ -16,12 +15,16 @@ class CustomUser(AbstractUser):
     department = models.CharField(max_length=150, blank=True)
 
 
-    REQUIRED_FIELDS = ['email', 'matric', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+
+    @property
+    def matric(self):
+        return self.username
 
     def __str__(self):
         return f"{self.matric} - {self.email}"
     
     def save(self, *args, **kwargs):
         # to convert all matric number entries to uppercase
-        self.matric = self.matric.upper()
+        self.username = self.username.upper()
         super().save(*args, **kwargs)
