@@ -5,7 +5,7 @@
 
 
 {% block title %}Login{% endblock title %}
-    
+
 
 
 {% block content %}
@@ -17,16 +17,16 @@
         <label for="username">Username:</label>
         <!-- <input type="text" name="username" id="username" required> -->
         {% render_field form.username name="username" id="username" type="text" %}
-        {% for error in form.file.errors %}
-            <p class="error-msg">{{ error }}</p>
+        {% for error in form.username.errors %}
+        <p class="error-msg">{{ error }}</p>
         {% endfor %}
     </div>
     <div class="form-group">
         <label for="password">Password:</label>
         <!-- <input type="password" name="password" id="password" required> -->
         {% render_field form.password name="password" id="password" type="password" %}
-        {% for error in form.file.errors %}
-            <p class="error-msg">{{ error }}</p>
+        {% for error in form.password.errors %}
+        <p class="error-msg">{{ error }}</p>
         {% endfor %}
     </div>
 
