@@ -17,7 +17,6 @@ def upload_result_view(request):
 
         if form.is_valid():
             uploaded_results = form.cleaned_data["file"]
-            print(uploaded_results)
             user = request.user
 
             for file in uploaded_results:
