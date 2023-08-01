@@ -17,9 +17,19 @@ class CustomUser(AbstractUser):
 
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.matric = self.username     # this ensures that `matric` and `username` fields carry the same value
+
     @property
     def matric(self):
+        """Return the username (i.e the matric number)"""
         return self.username
+    
+    @matric.setter
+    def matric(self, value):
+        """Sets the username to value and saves it to the database to maintain uniformity"""
+        self.username = value
 
     def __str__(self):
         return f"{self.matric} - {self.email}"
