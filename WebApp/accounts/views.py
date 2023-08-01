@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import CustomUserCreationForm
@@ -19,6 +20,6 @@ def register(request):
     form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
 
-
+@login_required
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
