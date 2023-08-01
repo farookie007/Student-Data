@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+
+
+{% block title %}Login{% endblock title %}
+    
+
+
+{% block content %}
+
+<h2>Login Form</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <!-- <input type="text" name="username" id="username" required> -->
+        {% render_field form.username name="username" id="username" type="text" %}
+        {% for error in form.file.errors %}
+            <p class="error-msg">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <!-- <input type="password" name="password" id="password" required> -->
+        {% render_field form.password name="password" id="password" type="password" %}
+        {% for error in form.file.errors %}
+            <p class="error-msg">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Login</button>
+    <div class="foot">
+        <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register</a></p>
+    </div>
+</form>
+
+{% endblock content %}

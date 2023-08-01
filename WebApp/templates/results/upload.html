@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Upload{% endblock title %}
+
+
+{% block content %}
+
+<h2>Upload Results</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="files">Add Files:</label>
+        <!-- <input type="password" name="password" id="password" required> -->
+        {% render_field form.file name="file" id="file" type="file" %}
+        {% for error in form.file.errors %}
+            <p class="error-msg">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Upload</button>
+</form>
+
+{% endblock content %}

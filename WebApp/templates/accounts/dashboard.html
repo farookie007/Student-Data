@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Dashboard{% endblock title %}
+
+
+{% block content %}
+    
+        <h2 class="name">{{ user.last_name|upper }},</h2>
+        <h2 class="name">{{ user.first_name }} {{ user.middle_name }}</h2>
+        <div class="details">
+            <p class="left">{{ user.matric }}</p>
+            <p class="right">{{ user.cgpa }}</p>
+        </div>
+
+{% endblock content %}
