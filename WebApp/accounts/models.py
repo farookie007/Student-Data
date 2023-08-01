@@ -20,3 +20,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.matric} - {self.email}"
+    
+    def save(self, *args, **kwargs):
+        # to convert all matric number entries to uppercase
+        self.matric = self.matric.upper()
+        super().save(*args, **kwargs)
