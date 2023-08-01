@@ -1,7 +1,9 @@
 import pandas as pd
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
 
-from utils.utils import parse_result_html, calculate_gpa, calculate_cgpa, get_semester, clean, merge
+from utils.utils import parse_result_html, calculate_gpa, calculate_cgpa, get_semester, clean
 from .forms import ResultUploadForm
 from .models import Result
 
@@ -22,9 +24,9 @@ def upload_result_view(request):
 
                 # looping over each semester result in the file
                 for df in dfs:
-                    cleaned_df = clean(df, fac, level)
+                    result_id = f'{user.matric}:{session}/{semester}/{level}{"E" if fac == "Engineering and Technology" else ""}'       # unique id to differentiate each result
+                    cleaned_df = clean(df, result_id)
                     semester = get_semester(cleaned_df)
-                    result_id = f'{user.matric}:{session}/{semester}'       # unique id to differentiate each result
                     # checking to see if the result already exists in the database using the `result_id`
                     result = Result.objects.filter(result_id=result_id)
 
@@ -43,15 +45,17 @@ def upload_result_view(request):
                     result.payload = df.to_json()
                     result.gpa = calculate_gpa(cleaned_df)
                     result.save()
-
+            messages.success(request, 'Uploaded successfully')
             # Calculating CGPA at the end of each semester
             user_results = Result.objects.filter(owner=user).order_by('result_id')
             for i, result in enumerate(user_results, start=1):
-                prev_dfs = [clean(pd.read_json(r.payload), fac, r.level) for r in user_results[:i]]
+                prev_dfs = [clean(pd.read_json(r.payload), r.result_id) for r in user_results[:i]]
                 result.cgpa = calculate_cgpa(prev_dfs)
                 result.save()
+            user.cgpa = result.cgpa
+            user.save()
+            return redirect(reverse('accounts:dashboard'))
 
-            return render(request, 'results/success.html', {'user_results': Result.objects.filter(owner=user)})
     # otherwise;
     else:
         form = ResultUploadForm()
